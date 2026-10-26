@@ -1,0 +1,11 @@
+[project]
+name = "toy-storey-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "faker>=40.43.0",
+    "ipykernel>=7.4.0",
+    "pandas>=3.1.0",
+]
