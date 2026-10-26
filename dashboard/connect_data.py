@@ -3,7 +3,7 @@ import duckdb
 
 
 ROOT_PATH = Path(__file__).parents[1]
-DB_PATH = ROOT_PATH / "ingestion" / "toy_store.duckdb"
+DB_PATH = ROOT_PATH / "ingestion" / "toystore.duckdb"
 
 
 def load_data(query: str = "SELECT * FROM table"):
