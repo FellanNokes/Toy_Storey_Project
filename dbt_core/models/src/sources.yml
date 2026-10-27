@@ -1,0 +1,12 @@
+sources:
+    - name: sales_data
+      database: toystorey
+      schema: raw
+      tables:
+        - name: sales
+    
+    - name: inventory_data
+      database: toystorey
+      schema: raw
+      tables:
+        - name: inventory
