@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "dlt[duckdb]>=1.31.0",
+    "duckdb>=2.0.0",
     "faker>=40.43.0",
     "ipykernel>=7.4.0",
     "matplotlib>=3.11.2",
