@@ -1,3 +1,10 @@
+# dbt_core
+target/
+dbt_packages/
+logs/
+.env
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
