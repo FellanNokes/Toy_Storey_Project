@@ -2064,6 +2064,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "dlt", extra = ["duckdb"] },
+    { name = "duckdb" },
     { name = "faker" },
     { name = "ipykernel" },
     { name = "matplotlib" },
@@ -2074,6 +2075,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "dlt", extras = ["duckdb"], specifier = ">=1.31.0" },
+    { name = "duckdb", specifier = ">=2.0.0" },
     { name = "faker", specifier = ">=40.43.0" },
     { name = "ipykernel", specifier = ">=7.4.0" },
     { name = "matplotlib", specifier = ">=3.11.2" },

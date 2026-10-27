@@ -20,4 +20,8 @@ def layout_home_page():
 
     st.divider()
 
-    
+    st.dataframe(df)
+
+
+if __name__ == "__main__":
+    layout_home_page()
