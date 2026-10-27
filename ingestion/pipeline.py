@@ -26,7 +26,7 @@ def products():
 def main():
     pipeline = dlt.pipeline(
         pipeline_name="toystore",
-        destination=dlt.destinations.duckdb("data/toystore.duckdb"),
+        destination=dlt.destinations.duckdb(str(DB_FILE)),
         dataset_name="raw",
     )
     load_info = pipeline.run([products(), sales()])
