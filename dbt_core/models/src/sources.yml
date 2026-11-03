@@ -4,9 +4,27 @@ sources:
       schema: raw
       tables:
         - name: sales
-    
+
+    - name: sales_items_data
+      database: toystorey
+      schema: raw
+      tables:
+        - name: sales__items
+
     - name: inventory_data
       database: toystorey
       schema: raw
       tables:
         - name: inventory
+
+    - name: inventory_items_data
+      database: toystorey
+      schema: raw
+      tables:
+        - name: inventory__items
+
+    - name: products_data
+      database: toystorey
+      schema: raw
+      tables:
+        - name: products
