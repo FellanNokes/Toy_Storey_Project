@@ -30,7 +30,7 @@ dbt_toy_store:
   outputs:
     dev:
       type: duckdb
-      path: './dev.duckdb'
+      path: '../data/dev.duckdb'
       attach:
         - path: '../data/toystore.duckdb'
           alias: toystore
