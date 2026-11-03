@@ -22,6 +22,6 @@ class Sale(BaseModel):
     date: date
     total_amount: float
     payment_method: str
-    transaction_typ: str
+    transaction_type: str
     transaction_timestamp: datetime
     customer_id: str | None = None
