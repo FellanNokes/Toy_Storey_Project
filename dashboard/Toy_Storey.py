@@ -45,7 +45,18 @@ def layout_home_page():
         y_label="Total Amount",
         use_container_width=True,
         sort=False)
-    
+
+    st.subheader("Payment method distribution")
+    st.bar_chart(
+        df.groupby("payment_method", as_index=False).agg({"total_amount": "count"}).sort_values(by="total_amount", ascending=False),
+        x="payment_method",
+        x_label="Payment Method",
+        y="total_amount",
+        y_label="Total Amount",
+        use_container_width=True,
+        sort=False
+    )
+
     st.dataframe(df)
 
 if __name__ == "__main__":
