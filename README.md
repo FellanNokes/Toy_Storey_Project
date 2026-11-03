@@ -25,15 +25,15 @@ touch ~/.dbt/profiles.yml
 ### 2. Add the following content
 
 ```yaml
-dbt_toy_storey:
+dbt_toy_store:
   target: dev
   outputs:
     dev:
       type: duckdb
       path: './dev.duckdb'
       attach:
-        - path: '../data/toystorey.duckdb'
-          alias: toystorey
+        - path: '../data/toystore.duckdb'
+          alias: toystore
           read_only: true
 ```
 
