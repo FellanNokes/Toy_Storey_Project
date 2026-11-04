@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parent
 STEPS = [
     ("Generate data", ["uv", "run", "create_data.py"], ROOT / "data_generation"),
     ("Load raw data with dlt", ["uv", "run", "python", "ingestion/pipeline.py"], ROOT),
+    ("Install dbt packages", ["uv", "run", "dbt", "deps"], ROOT / "dbt_core"),
     ("Build dbt models", ["uv", "run", "dbt", "build"], ROOT / "dbt_core"),
 ]
 
