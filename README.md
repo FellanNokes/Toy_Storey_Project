@@ -10,7 +10,6 @@ data_generation  →  data/*.jsonl  →  dlt  →  toystore.duckdb (raw)  →  d
 
 - [uv](https://docs.astral.sh/uv/)
 - Python 3.13 (installed automatically by uv)
-- `~/.dbt/profiles.yml` configured as described in [3.1](#31-configure-profilesyml)
 
 Install all dependencies from the project root:
 
@@ -20,16 +19,67 @@ uv sync
 
 All commands below are run from the project root unless stated otherwise.
 
+## Configure the dbt profile
+
+dbt uses a file called `profiles.yml` to know how to connect to the database. These files often contain credentials and are therefore normally not committed to Git. This project uses DuckDB, so no passwords are needed. You only need to do this once.
+
+### Find or create the file
+
+By default, dbt looks for `profiles.yml` in `~/.dbt/` (your home directory). If a `profiles.yml` exists in the project folder, dbt uses that one first.
+
+Open the file in your editor of choice, for example:
+
+```bash
+code ~/.dbt/profiles.yml
+```
+
+If the file or folder doesn't exist, create them:
+
+```bash
+mkdir -p ~/.dbt
+touch ~/.dbt/profiles.yml
+```
+
+### Add the following content
+
+```yaml
+dbt_toy_store:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: '../data/dev.duckdb'
+      attach:
+        - path: '../data/toystore.duckdb'
+          alias: toystore
+          read_only: true
+```
+
+The paths are relative to the folder dbt is run from, so **always run dbt from `dbt_core/`**. `run_pipeline.py` does this automatically.
+
+### Verify
+
+```bash
+cd dbt_core
+uv run dbt debug
+cd ..
+```
+
+All checks should show `OK`.
+
 ## Quick start
 
 ```bash
-uv run python run_pipeline.py                       # generate data, load with dlt, build with dbt
+uv run python run_pipeline.py                       # generate data, load with dlt, install dbt packages, build with dbt
 uv run python check_data.py                         # verify row counts in each layer
 uv run uvicorn backend.main:app --reload            # terminal 1: API
 uv run streamlit run dashboard/Toy_Storey.py        # terminal 2: dashboard
 ```
 
-`run_pipeline.py` runs steps 1–3 below in order and stops on the first step that fails. The sections below explain each step and how to run them one by one.
+- API docs: http://localhost:8000/docs
+- Dashboard: http://localhost:8501
+
+`run_pipeline.py` runs steps 1–3 below in order and stops on the first step that fails. The next section explains each step and how to run them one by one.
 
 ## Step by step
 
@@ -55,15 +105,13 @@ The same seed is used every time, so the output is identical on every run.
 
 dlt reads the files and loads them as-is into `data/toystore.duckdb`, in the schema `raw`.
 
-#### 2.1 Run the pipeline
-
 ```bash
 uv run python ingestion/pipeline.py
 ```
 
 The first run creates `data/toystore.duckdb`. dlt prints a summary ending with `LOADED and contains no failed jobs`.
 
-#### 2.2 Verify the tables
+Verify the tables:
 
 ```bash
 uv run python check_data.py
@@ -81,68 +129,17 @@ You should see these tables in the `raw` schema:
 
 dlt also creates `_dlt_*` tables for its own bookkeeping. Leave them as they are.
 
-#### 2.3 Re-running
-
 `sales` and `inventory` use `merge` on `transaction_id` and `snapshot_id`, and `products` uses `replace`. Running the pipeline again does not create duplicates.
-
-To start from scratch, delete the `data/` folder and run `run_pipeline.py` again.
 
 ### 3. Transform with dbt
 
-dbt reads the raw tables from `toystore.duckdb` (attached read-only) and writes staging, warehouse and mart models to `data/dev.duckdb`.
+dbt reads the raw tables from `toystore.duckdb` (attached read-only) and writes staging, warehouse and mart models to `data/dev.duckdb`. Make sure the [dbt profile](#configure-the-dbt-profile) is set up first.
 
-#### 3.1 Configure `profiles.yml`
-
-dbt uses a file called `profiles.yml` to know how to connect to the database. These files often contain credentials and are therefore normally not committed to Git. This project uses DuckDB, so no passwords are needed.
-
-**Find or create the file**
-
-By default, dbt looks for `profiles.yml` in `~/.dbt/` (your home directory). If a `profiles.yml` exists in the project folder, dbt uses that one first.
-
-Open the file in your editor of choice, for example:
-
-```bash
-code ~/.dbt/profiles.yml
-```
-
-If the file or folder doesn't exist, create them:
-
-```bash
-mkdir -p ~/.dbt
-touch ~/.dbt/profiles.yml
-```
-
-**Add the following content**
-
-```yaml
-dbt_toy_store:
-  target: dev
-  outputs:
-    dev:
-      type: duckdb
-      path: '../data/dev.duckdb'
-      attach:
-        - path: '../data/toystore.duckdb'
-          alias: toystore
-          read_only: true
-```
-
-The paths are relative to the folder dbt is run from, so **always run dbt from `dbt_core/`**. `run_pipeline.py` does this automatically.
-
-**Verify**
+From `dbt_core/`, install the dbt packages (needed after cloning and when `packages.yml` changes) and build:
 
 ```bash
 cd dbt_core
-uv run dbt debug
-```
-
-All checks should show `OK`.
-
-#### 3.2 Build the models
-
-From `dbt_core/`:
-
-```bash
+uv run dbt deps
 uv run dbt build
 cd ..
 ```
@@ -200,11 +197,14 @@ uv run python run_pipeline.py
 uv run python check_data.py
 ```
 
-`check_data.py` should show the same number of rows in `raw.sales`, `staging.src_sales`, `warehouse.fct_sales` and `marts.mart_sales`. Then start the API and the dashboard as in the Quick start.
+In PowerShell, use `Remove-Item -Recurse -Force data` instead of `rm -rf data`.
+
+`check_data.py` should show the same number of rows in `raw.sales`, `staging.src_sales`, `warehouse.fct_sales` and `marts.mart_sales`. Then start the API and the dashboard as in the [Quick start](#quick-start).
 
 ## Troubleshooting
 
 - **`Database is locked`**: DuckDB allows only one process to write at a time. Close notebooks or tools that have a `.duckdb` file open without `read_only=True`, and don't run dlt or dbt while the API is reading.
+- **dbt says packages are missing**: run `uv run dbt deps` from `dbt_core/`.
 - **Wrong or missing data in the dashboard**: run `uv run python check_data.py` to see which layer is missing rows or has too many. Compare `raw.sales` with the dbt models.
 - **dlt complains about missing tables after deleting `data/`**: dlt keeps its own pipeline state in `~/.dlt/pipelines/toystore`. Delete that folder and run again.
 - **Changes in `dashboard/` don't show up**: stop Streamlit (Ctrl+C) and start it again. Imported modules are not always reloaded automatically.
