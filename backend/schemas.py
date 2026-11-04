@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from pydantic import BaseModel
 
 class DailyRevenue(BaseModel):
@@ -13,3 +13,15 @@ class ProductPerformance(BaseModel):
     category: str
     units_sold: int
     revenue: float
+
+class Sale(BaseModel):
+    day: int
+    month: int
+    year: int
+    day_of_week: int | str
+    date: date
+    total_amount: float
+    payment_method: str
+    transaction_type: str
+    transaction_timestamp: datetime
+    customer_id: str | None = None

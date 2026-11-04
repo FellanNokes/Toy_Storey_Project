@@ -1,11 +1,11 @@
 import streamlit as st
 from pathlib import Path
-from connect_data import load_data
+from api_client import get_sales
 
 
 @st.cache_data
 def get_data():
-    return load_data()
+    return get_sales()
 
 df = get_data()
 
