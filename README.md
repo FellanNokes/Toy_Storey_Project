@@ -10,6 +10,7 @@ data_generation  →  data/*.jsonl  →  dlt  →  toystore.duckdb (raw)  →  d
 
 - [uv](https://docs.astral.sh/uv/)
 - Python 3.13 (installed automatically by uv)
+- `~/.dbt/profiles.yml` configured as described in [3.1](#31-configure-profilesyml)
 
 Install all dependencies from the project root:
 
@@ -19,7 +20,20 @@ uv sync
 
 All commands below are run from the project root unless stated otherwise.
 
-## 1. Generate data
+## Quick start
+
+```bash
+uv run python run_pipeline.py                       # generate data, load with dlt, build with dbt
+uv run python check_data.py                         # verify row counts in each layer
+uv run uvicorn backend.main:app --reload            # terminal 1: API
+uv run streamlit run dashboard/Toy_Storey.py        # terminal 2: dashboard
+```
+
+`run_pipeline.py` runs steps 1–3 below in order and stops on the first step that fails. The sections below explain each step and how to run them one by one.
+
+## Step by step
+
+### 1. Generate data
 
 The generator acts as the store's register and inventory system. It writes one year of sales and daily inventory snapshots as JSON Lines, plus the product catalogue as CSV.
 
@@ -37,11 +51,11 @@ Check that these exist:
 
 The same seed is used every time, so the output is identical on every run.
 
-## 2. Load raw data with dlt
+### 2. Load raw data with dlt
 
 dlt reads the files and loads them as-is into `data/toystore.duckdb`, in the schema `raw`.
 
-### 2.1 Run the pipeline
+#### 2.1 Run the pipeline
 
 ```bash
 uv run python ingestion/pipeline.py
@@ -49,10 +63,10 @@ uv run python ingestion/pipeline.py
 
 The first run creates `data/toystore.duckdb`. dlt prints a summary ending with `LOADED and contains no failed jobs`.
 
-### 2.2 Verify the tables
+#### 2.2 Verify the tables
 
 ```bash
-uv run python -c "import duckdb; con = duckdb.connect('data/toystore.duckdb', read_only=True); con.sql('show all tables').show()"
+uv run python check_data.py
 ```
 
 You should see these tables in the `raw` schema:
@@ -64,23 +78,24 @@ You should see these tables in the `raw` schema:
 | `sales__items` | One row per receipt line, linked to `sales` via `_dlt_parent_id` → `_dlt_id` |
 | `inventory` | One row per daily snapshot, store details flattened to `store__*` |
 | `inventory__items` | One row per product and snapshot, linked to `inventory` via `_dlt_parent_id` → `_dlt_id` |
-| `_dlt_*` | dlt's internal bookkeeping, leave as is |
 
-### 2.3 Re-running
+dlt also creates `_dlt_*` tables for its own bookkeeping. Leave them as they are.
+
+#### 2.3 Re-running
 
 `sales` and `inventory` use `merge` on `transaction_id` and `snapshot_id`, and `products` uses `replace`. Running the pipeline again does not create duplicates.
 
-To start from scratch, delete `data/toystore.duckdb` and run steps 1 and 2 again.
+To start from scratch, delete the `data/` folder and run `run_pipeline.py` again.
 
-## 3. Transform with dbt
+### 3. Transform with dbt
 
 dbt reads the raw tables from `toystore.duckdb` (attached read-only) and writes staging, warehouse and mart models to `data/dev.duckdb`.
 
-### 3.1 Configure `profiles.yml`
+#### 3.1 Configure `profiles.yml`
 
 dbt uses a file called `profiles.yml` to know how to connect to the database. These files often contain credentials and are therefore normally not committed to Git. This project uses DuckDB, so no passwords are needed.
 
-#### Find or create the file
+**Find or create the file**
 
 By default, dbt looks for `profiles.yml` in `~/.dbt/` (your home directory). If a `profiles.yml` exists in the project folder, dbt uses that one first.
 
@@ -97,7 +112,7 @@ mkdir -p ~/.dbt
 touch ~/.dbt/profiles.yml
 ```
 
-#### Add the following content
+**Add the following content**
 
 ```yaml
 dbt_toy_store:
@@ -112,9 +127,9 @@ dbt_toy_store:
           read_only: true
 ```
 
-The paths are relative to the folder dbt is run from, so **always run dbt from `dbt_core/`**.
+The paths are relative to the folder dbt is run from, so **always run dbt from `dbt_core/`**. `run_pipeline.py` does this automatically.
 
-#### Verify
+**Verify**
 
 ```bash
 cd dbt_core
@@ -123,7 +138,7 @@ uv run dbt debug
 
 All checks should show `OK`.
 
-### 3.2 Build the models
+#### 3.2 Build the models
 
 From `dbt_core/`:
 
@@ -140,7 +155,9 @@ cd ..
 | `warehouse` | Facts and dimensions (`fct_*`, `dim_*`) |
 | `marts` | Models used by the API (`mart_*`) |
 
-## 4. Start the backend (FastAPI)
+Run `uv run python check_data.py` from the project root to see the row count of every model.
+
+### 4. Start the backend (FastAPI)
 
 The API reads the marts from `data/dev.duckdb` in read-only mode.
 
@@ -161,7 +178,7 @@ Optional environment variables:
 
 If an endpoint returns `503`, the response's `detail` explains why: the database or mart doesn't exist yet (run `dbt build`), or the database is locked by another process.
 
-## 5. Start the dashboard (Streamlit)
+### 5. Start the dashboard (Streamlit)
 
 Keep the backend running and open a second terminal:
 
@@ -175,17 +192,20 @@ To point the dashboard to another API, set `API_URL` (default `http://localhost:
 
 ## Run everything from scratch
 
+Stop the API, Streamlit and any notebooks using DuckDB first, then:
+
 ```bash
-uv sync
-cd data_generation && uv run create_data.py && cd ..
-uv run python ingestion/pipeline.py
-cd dbt_core && uv run dbt build && cd ..
-uv run uvicorn backend.main:app --reload            # terminal 1
-uv run streamlit run dashboard/Toy_Storey.py        # terminal 2
+rm -rf data
+uv run python run_pipeline.py
+uv run python check_data.py
 ```
+
+`check_data.py` should show the same number of rows in `raw.sales`, `staging.src_sales`, `warehouse.fct_sales` and `marts.mart_sales`. Then start the API and the dashboard as in the Quick start.
 
 ## Troubleshooting
 
 - **`Database is locked`**: DuckDB allows only one process to write at a time. Close notebooks or tools that have a `.duckdb` file open without `read_only=True`, and don't run dlt or dbt while the API is reading.
+- **Wrong or missing data in the dashboard**: run `uv run python check_data.py` to see which layer is missing rows or has too many. Compare `raw.sales` with the dbt models.
+- **dlt complains about missing tables after deleting `data/`**: dlt keeps its own pipeline state in `~/.dlt/pipelines/toystore`. Delete that folder and run again.
 - **Changes in `dashboard/` don't show up**: stop Streamlit (Ctrl+C) and start it again. Imported modules are not always reloaded automatically.
 - **Old data in the dashboard**: clear Streamlit's cache with **C** or from the menu in the top right corner.
