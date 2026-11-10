@@ -9,5 +9,5 @@ select
     vat_rate,
     line_total,
     _dlt_parent_id,
-    _dlt_id,
+    _dlt_id
 from stg_sales

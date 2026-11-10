@@ -12,5 +12,5 @@ select
     currency,
     subtotal,
     vat_amount,
-    _dlt_id,
+    _dlt_id
 from stg_sales
