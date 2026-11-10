@@ -9,5 +9,6 @@ select
     start_stock,
     reorder_point,
     reorder_quantity,
-    location as shelf_location
+    location as shelf_location,
+    _dlt_load_id
 from stg_products

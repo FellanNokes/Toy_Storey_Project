@@ -47,5 +47,5 @@ models:
       +schema: marts
 
 seeds:
-  dbt_code:
+  dbt_core:
     +schema: staging
