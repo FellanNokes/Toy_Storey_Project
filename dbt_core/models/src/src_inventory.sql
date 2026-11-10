@@ -16,6 +16,7 @@ select
     i.quantity_reserved,
     i.quantity_available,
     i.quantity_on_order,
+    i.reorder_point,
     i.stock_status,
     i.last_sold_at,
     i.last_restocked_at,
