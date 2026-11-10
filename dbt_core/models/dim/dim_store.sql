@@ -1,13 +1,13 @@
-with src_inventory as(select * from {{ ref('src_inventory') }})
+with src_store as(select * from {{ ref('src_store') }})
 
 select
     store_id,
     store_name,
     store_city,
     store_address
-from src_inventory 
+from src_store 
 -- use the latest row for each product id
 qualify row_number() over (
-    partition by product_id
-    order by updated_at desc
+    partition by store_id
+    order by snapshot_timestamp desc
 ) = 1
