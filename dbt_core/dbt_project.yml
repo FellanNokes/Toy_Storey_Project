@@ -32,6 +32,7 @@ models:
     +materialized: table
 
     src: 
+      +materialized: ephemeral
       +schema: staging
 
     dim:
