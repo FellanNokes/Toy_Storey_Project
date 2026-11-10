@@ -1,0 +1,81 @@
+Table fct_inventory_snapshot {
+  // Foreign keys (dimensions)
+  date_id VARCHAR [not null, ref:> dim_date.date_id]
+  store_id VARCHAR [not null, ref:> dim_store.store_id]
+  product_id VARCHAR [not null, ref:> dim_product.product_id]
+
+  // Degenerate dimensions / descriptive attributes
+  snapshot_id VARCHAR [not null] // time-day for the inventory snapshot
+  snapshot_timestamp DATETIME [not null]
+  shelf_location VARCHAR 
+  stock_status VARCHAR [not null]
+
+  // Measures: quantities
+  quantity_on_hand INTEGER [not null]
+  quantity_reserved INTEGER 
+  quantity_available INTEGER [not null]
+  quantity_on_order INTEGER [not null]
+  start_stock INTEGER [not null]
+
+  // Measures: values
+  unit_cost INTEGER [not null]
+  unit_price INTEGER [not null]
+}
+
+Table fct_sales {
+  // Degenerate dimensions (grain: one row per transaction line)
+  transaction_id VARCHAR [not null]
+  line_id VARCHAR [not null]
+  line_number INTEGER [not null] // line number
+  transaction_timestamp DATETIME [not null]
+
+  // Foreign keys (dimensions)
+  date_id VARCHAR [not null, ref:> dim_date.date_id]
+  store_id VARCHAR [not null, ref:> dim_store.store_id]
+  product_id VARCHAR [not null, ref:> dim_product.product_id]
+  customer_id VARCHAR 
+  employee_id VARCHAR [not null]
+  campaign_code VARCHAR 
+  register_id VARCHAR [not null]
+
+  // Descriptive attributes
+  payment_method VARCHAR [not null]
+  currency VARCHAR [not null]
+
+  // Measures
+  quantity INTEGER [not null]
+  unit_price FLOAT [not null]
+  discount_amount FLOAT 
+  vat_rate FLOAT [not null]
+  vat_amount FLOAT [not null]
+  line_total FLOAT [not null] // amount SEK of line
+}
+
+
+Table dim_product {
+  product_id VARCHAR [not null, primary key]
+  category VARCHAR 
+  product_name VARCHAR [not null]
+  brand VARCHAR [not null]
+  age_group VARCHAR 
+  reorder_point INTEGER [not null]
+  reorder_quantity INTEGER [not null]
+}
+
+Table dim_date {
+  date_id VARCHAR [not null, primary key]
+  date DATE [not null]
+  year INTEGER (4) [not null]
+  month INTEGER (2) [not null]
+  day INTEGER (2) [not null]
+  day_of_week VARCHAR [not null]
+  is_weekend BOOL [not null]
+  is_holiday BOOL [not null]
+}
+
+Table dim_store {
+  store_id VARCHAR [not null, primary key]
+  store_name VARCHAR [not null]
+  store_city VARCHAR [not null]
+  store_address VARCHAR [not null]
+}
