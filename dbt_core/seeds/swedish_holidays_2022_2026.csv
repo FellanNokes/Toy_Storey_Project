@@ -1,0 +1,116 @@
+date,holiday_name,holiday_name_en,day_of_week,is_public_holiday
+2022-01-01,Nyårsdagen,New Year's Day,Saturday,true
+2022-01-05,Trettondagsafton,Epiphany Eve,Wednesday,false
+2022-01-06,Trettondedag jul,Epiphany,Thursday,true
+2022-04-14,Skärtorsdagen,Maundy Thursday,Thursday,false
+2022-04-15,Långfredagen,Good Friday,Friday,true
+2022-04-16,Påskafton,Easter Eve,Saturday,false
+2022-04-17,Påskdagen,Easter Sunday,Sunday,true
+2022-04-18,Annandag påsk,Easter Monday,Monday,true
+2022-04-30,Valborgsmässoafton,Walpurgis Night,Saturday,false
+2022-05-01,Första maj,International Workers' Day,Sunday,true
+2022-05-26,Kristi himmelsfärdsdag,Ascension Day,Thursday,true
+2022-06-04,Pingstafton,Whitsun Eve,Saturday,false
+2022-06-05,Pingstdagen,Whit Sunday,Sunday,true
+2022-06-06,Sveriges nationaldag,National Day of Sweden,Monday,true
+2022-06-24,Midsommarafton,Midsummer Eve,Friday,false
+2022-06-25,Midsommardagen,Midsummer Day,Saturday,true
+2022-11-04,Allhelgonaafton,All Saints' Eve,Friday,false
+2022-11-05,Alla helgons dag,All Saints' Day,Saturday,true
+2022-12-13,Luciadagen,Saint Lucy's Day,Tuesday,false
+2022-12-24,Julafton,Christmas Eve,Saturday,false
+2022-12-25,Juldagen,Christmas Day,Sunday,true
+2022-12-26,Annandag jul,Boxing Day,Monday,true
+2022-12-31,Nyårsafton,New Year's Eve,Saturday,false
+2023-01-01,Nyårsdagen,New Year's Day,Sunday,true
+2023-01-05,Trettondagsafton,Epiphany Eve,Thursday,false
+2023-01-06,Trettondedag jul,Epiphany,Friday,true
+2023-04-06,Skärtorsdagen,Maundy Thursday,Thursday,false
+2023-04-07,Långfredagen,Good Friday,Friday,true
+2023-04-08,Påskafton,Easter Eve,Saturday,false
+2023-04-09,Påskdagen,Easter Sunday,Sunday,true
+2023-04-10,Annandag påsk,Easter Monday,Monday,true
+2023-04-30,Valborgsmässoafton,Walpurgis Night,Sunday,false
+2023-05-01,Första maj,International Workers' Day,Monday,true
+2023-05-18,Kristi himmelsfärdsdag,Ascension Day,Thursday,true
+2023-05-27,Pingstafton,Whitsun Eve,Saturday,false
+2023-05-28,Pingstdagen,Whit Sunday,Sunday,true
+2023-06-06,Sveriges nationaldag,National Day of Sweden,Tuesday,true
+2023-06-23,Midsommarafton,Midsummer Eve,Friday,false
+2023-06-24,Midsommardagen,Midsummer Day,Saturday,true
+2023-11-03,Allhelgonaafton,All Saints' Eve,Friday,false
+2023-11-04,Alla helgons dag,All Saints' Day,Saturday,true
+2023-12-13,Luciadagen,Saint Lucy's Day,Wednesday,false
+2023-12-24,Julafton,Christmas Eve,Sunday,false
+2023-12-25,Juldagen,Christmas Day,Monday,true
+2023-12-26,Annandag jul,Boxing Day,Tuesday,true
+2023-12-31,Nyårsafton,New Year's Eve,Sunday,false
+2024-01-01,Nyårsdagen,New Year's Day,Monday,true
+2024-01-05,Trettondagsafton,Epiphany Eve,Friday,false
+2024-01-06,Trettondedag jul,Epiphany,Saturday,true
+2024-03-28,Skärtorsdagen,Maundy Thursday,Thursday,false
+2024-03-29,Långfredagen,Good Friday,Friday,true
+2024-03-30,Påskafton,Easter Eve,Saturday,false
+2024-03-31,Påskdagen,Easter Sunday,Sunday,true
+2024-04-01,Annandag påsk,Easter Monday,Monday,true
+2024-04-30,Valborgsmässoafton,Walpurgis Night,Tuesday,false
+2024-05-01,Första maj,International Workers' Day,Wednesday,true
+2024-05-09,Kristi himmelsfärdsdag,Ascension Day,Thursday,true
+2024-05-18,Pingstafton,Whitsun Eve,Saturday,false
+2024-05-19,Pingstdagen,Whit Sunday,Sunday,true
+2024-06-06,Sveriges nationaldag,National Day of Sweden,Thursday,true
+2024-06-21,Midsommarafton,Midsummer Eve,Friday,false
+2024-06-22,Midsommardagen,Midsummer Day,Saturday,true
+2024-11-01,Allhelgonaafton,All Saints' Eve,Friday,false
+2024-11-02,Alla helgons dag,All Saints' Day,Saturday,true
+2024-12-13,Luciadagen,Saint Lucy's Day,Friday,false
+2024-12-24,Julafton,Christmas Eve,Tuesday,false
+2024-12-25,Juldagen,Christmas Day,Wednesday,true
+2024-12-26,Annandag jul,Boxing Day,Thursday,true
+2024-12-31,Nyårsafton,New Year's Eve,Tuesday,false
+2025-01-01,Nyårsdagen,New Year's Day,Wednesday,true
+2025-01-05,Trettondagsafton,Epiphany Eve,Sunday,false
+2025-01-06,Trettondedag jul,Epiphany,Monday,true
+2025-04-17,Skärtorsdagen,Maundy Thursday,Thursday,false
+2025-04-18,Långfredagen,Good Friday,Friday,true
+2025-04-19,Påskafton,Easter Eve,Saturday,false
+2025-04-20,Påskdagen,Easter Sunday,Sunday,true
+2025-04-21,Annandag påsk,Easter Monday,Monday,true
+2025-04-30,Valborgsmässoafton,Walpurgis Night,Wednesday,false
+2025-05-01,Första maj,International Workers' Day,Thursday,true
+2025-05-29,Kristi himmelsfärdsdag,Ascension Day,Thursday,true
+2025-06-06,Sveriges nationaldag,National Day of Sweden,Friday,true
+2025-06-07,Pingstafton,Whitsun Eve,Saturday,false
+2025-06-08,Pingstdagen,Whit Sunday,Sunday,true
+2025-06-20,Midsommarafton,Midsummer Eve,Friday,false
+2025-06-21,Midsommardagen,Midsummer Day,Saturday,true
+2025-10-31,Allhelgonaafton,All Saints' Eve,Friday,false
+2025-11-01,Alla helgons dag,All Saints' Day,Saturday,true
+2025-12-13,Luciadagen,Saint Lucy's Day,Saturday,false
+2025-12-24,Julafton,Christmas Eve,Wednesday,false
+2025-12-25,Juldagen,Christmas Day,Thursday,true
+2025-12-26,Annandag jul,Boxing Day,Friday,true
+2025-12-31,Nyårsafton,New Year's Eve,Wednesday,false
+2026-01-01,Nyårsdagen,New Year's Day,Thursday,true
+2026-01-05,Trettondagsafton,Epiphany Eve,Monday,false
+2026-01-06,Trettondedag jul,Epiphany,Tuesday,true
+2026-04-02,Skärtorsdagen,Maundy Thursday,Thursday,false
+2026-04-03,Långfredagen,Good Friday,Friday,true
+2026-04-04,Påskafton,Easter Eve,Saturday,false
+2026-04-05,Påskdagen,Easter Sunday,Sunday,true
+2026-04-06,Annandag påsk,Easter Monday,Monday,true
+2026-04-30,Valborgsmässoafton,Walpurgis Night,Thursday,false
+2026-05-01,Första maj,International Workers' Day,Friday,true
+2026-05-14,Kristi himmelsfärdsdag,Ascension Day,Thursday,true
+2026-05-23,Pingstafton,Whitsun Eve,Saturday,false
+2026-05-24,Pingstdagen,Whit Sunday,Sunday,true
+2026-06-06,Sveriges nationaldag,National Day of Sweden,Saturday,true
+2026-06-19,Midsommarafton,Midsummer Eve,Friday,false
+2026-06-20,Midsommardagen,Midsummer Day,Saturday,true
+2026-10-30,Allhelgonaafton,All Saints' Eve,Friday,false
+2026-10-31,Alla helgons dag,All Saints' Day,Saturday,true
+2026-12-13,Luciadagen,Saint Lucy's Day,Sunday,false
+2026-12-24,Julafton,Christmas Eve,Thursday,false
+2026-12-25,Juldagen,Christmas Day,Friday,true
+2026-12-26,Annandag jul,Boxing Day,Saturday,true
+2026-12-31,Nyårsafton,New Year's Eve,Thursday,false

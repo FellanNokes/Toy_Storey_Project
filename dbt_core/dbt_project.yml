@@ -15,6 +15,7 @@ model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
 macro-paths: ["macros"]
+seed-paths: ["seeds"]
 
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
@@ -43,3 +44,7 @@ models:
     marts:
       +materialized: view
       +schema: marts
+
+seeds:
+  dbt_code:
+    +schema: staging
