@@ -21,6 +21,7 @@ transactions as (
 )
 
 select
+    t.transaction_id,
     d.day,
     d.month,
     d.year,
