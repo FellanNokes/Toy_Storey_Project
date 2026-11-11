@@ -13,6 +13,7 @@ select
     s.campaign_code,
     s.register_id,
     s.payment_method,
+    s.transaction_type,
     s.currency,
     i.quantity,
     i.unit_price,
