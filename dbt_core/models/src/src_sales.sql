@@ -9,6 +9,7 @@ select
     campaign_code,
     register_id,
     payment_method,
+    transaction_type,
     currency,
     subtotal,
     vat_amount,

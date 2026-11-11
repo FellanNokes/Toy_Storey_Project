@@ -1,0 +1,14 @@
+models:
+  - name: fct_sales
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [transaction_id, line_number]
+    columns:
+      - name: date_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_id

@@ -1,0 +1,7 @@
+models:
+  - name: mart_sales
+    columns:
+      - name: transaction_id
+        data_tests:
+          - unique
+          - not_null

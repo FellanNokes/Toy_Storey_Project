@@ -9,7 +9,7 @@ src_holiday as(select * from {{ ref('src_holiday')}})
 
 select
     cast(d.date_day as date) as date,
-    {{ dbt_utils.generate_surrogate_key(['date']) }} as date_id,
+    {{ dbt_utils.generate_surrogate_key(['cast(d.date_day as date)']) }} as date_id,
     year(d.date_day) as year,
     month(d.date_day) as month,
     day(d.date_day) as day,

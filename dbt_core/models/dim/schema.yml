@@ -1,0 +1,7 @@
+models:
+  - name: dim_date
+    columns:
+      - name: date_id
+        data_tests:
+          - unique
+          - not_null
