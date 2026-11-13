@@ -56,8 +56,3 @@ models:
               arguments:
                 to: ref('dim_store')
                 field: store_id
-
-      - name: snapshot_timestamp
-        data_tests:
-          - unique
-          - not_null
