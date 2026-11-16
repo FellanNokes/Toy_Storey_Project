@@ -17,4 +17,8 @@ select
     isodow(d.date_day) in (6, 7) as is_weekend,
     h.date is not null as is_holiday
 from date_spine d
-left join src_holiday h on cast(d.date_day as date) = cast(h.date as date)
+left join (
+    -- remove duplicate dates from src_holiday
+    select distinct cast(date as date) as date
+    from src_holiday
+) h on cast(d.date_day as date) = h.date

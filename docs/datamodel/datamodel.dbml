@@ -5,10 +5,11 @@ Table fct_inventory_snapshot {
   product_id VARCHAR [not null, ref:> dim_product.product_id]
 
   // Degenerate dimensions / descriptive attributes
-  snapshot_id VARCHAR [not null] // time-day for the inventory snapshot
   snapshot_timestamp DATETIME [not null]
   shelf_location VARCHAR 
   stock_status VARCHAR [not null]
+  last_sold_at DATETIME 
+  last_restocked_at DATETIME 
 
   // Measures: quantities
   quantity_on_hand INTEGER [not null]
@@ -20,12 +21,12 @@ Table fct_inventory_snapshot {
   // Measures: values
   unit_cost INTEGER [not null]
   unit_price INTEGER [not null]
+  inventory_value FLOAT [not null]
 }
 
 Table fct_sales {
   // Degenerate dimensions (grain: one row per transaction line)
   transaction_id VARCHAR [not null]
-  line_id VARCHAR [not null]
   line_number INTEGER [not null] // line number
   transaction_timestamp DATETIME [not null]
 
@@ -40,6 +41,7 @@ Table fct_sales {
 
   // Descriptive attributes
   payment_method VARCHAR [not null]
+  transaction_type VARCHAR [not null]
   currency VARCHAR [not null]
 
   // Measures
@@ -54,10 +56,11 @@ Table fct_sales {
 
 Table dim_product {
   product_id VARCHAR [not null, primary key]
-  category VARCHAR 
   product_name VARCHAR [not null]
+  category VARCHAR 
   brand VARCHAR [not null]
   age_group VARCHAR 
+  start_stock INTEGER 
   reorder_point INTEGER [not null]
   reorder_quantity INTEGER [not null]
 }
