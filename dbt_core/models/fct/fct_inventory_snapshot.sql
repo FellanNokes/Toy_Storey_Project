@@ -1,4 +1,3 @@
-sql
 with inventory as (select * from {{ ref('src_inventory') }}),
 items as (select * from {{ ref('src_inventory_item') }})
 
