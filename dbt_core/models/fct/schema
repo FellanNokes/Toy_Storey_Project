@@ -1,3 +1,5 @@
+version: 2
+
 models:
   - name: fct_sales
     data_tests:
@@ -13,25 +15,11 @@ models:
                 to: ref('dim_date')
                 field: date_id
 
-      - name: product_id
-        data_tests:
-          - not_null
-          - relationships:
-              arguments:
-                to: ref('dim_product')
-                field: product_id
-
-      - name: store_id
-        data_tests:
-          - not_null
-          - relationships:
-              arguments:
-                to: ref('dim_store')
-                field: store_id
-
-      
-models:
-  - name: fct_inventory
+  - name: fct_inventory_snapshot
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [snapshot_id, product_id]
     columns:
       - name: date_id
         data_tests:
