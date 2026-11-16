@@ -52,7 +52,20 @@ from backend.routers import inventory
 app.include_router(inventory.router)
 ```
  
-User input (dates, filters) always goes in as `?` parameters, never in the f-string.
+User input (dates, filters) always goes in as `?` parameters, never in the f-string:
+
+```python
+@router.get("/reorder", response_model=list[ReorderItem])
+def get_reorder(category: str | None = None):
+    sql = f"select product_id, product_name, quantity_available, reorder_point from {mart('mart_reorder')} where 1=1"
+    params = []
+    if category:
+        sql += " and category = ?"
+        params.append(category)
+    return query(sql, params)
+```
+
+Calling `/inventory/reorder?category=Pussel` then filters on the value safely.
  
 ## 4. Add a client function
  
