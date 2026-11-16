@@ -5,3 +5,17 @@ models:
         data_tests:
           - unique
           - not_null
+
+  - name: dim_product
+    columns:
+      - name: product_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: dim_store
+    columns:
+      - name: store_id
+        data_tests:
+          - unique
+          - not_null
