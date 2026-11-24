@@ -9,7 +9,6 @@ DATA_DIR = ROOT / "data"
 SALES_DIR = DATA_DIR / "sales"
 PRODUCTS_FILE = DATA_DIR / "products.csv"
 INVENTORY_DIR = DATA_DIR / "inventory"
-DB_FILE = DATA_DIR / "toystore.duckdb"
 
 
 @dlt.resource(name="sales", write_disposition="merge", primary_key="transaction_id")
@@ -39,8 +38,8 @@ def products():
 def main():
     pipeline = dlt.pipeline(
         pipeline_name="toystore",
-        destination=dlt.destinations.duckdb(str(DB_FILE)),
-        dataset_name="raw",
+        destination="snowflake",
+        dataset_name="staging",
     )
     load_info = pipeline.run([products(), sales(), inventory()])
     print(load_info)
