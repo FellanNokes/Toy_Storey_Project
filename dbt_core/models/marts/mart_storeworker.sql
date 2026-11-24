@@ -1,4 +1,7 @@
-with inventory as (select * from {{ ref('fct_inventory_snapshot') }}),
+with inventory as (
+    select * from {{ ref('fct_inventory_snapshot') }}
+    where snapshot_timestamp = (select max(snapshot_timestamp) from {{ ref('fct_inventory_snapshot') }})
+),
 products as (select * from {{ ref('dim_product') }})
 
 select
@@ -6,6 +9,8 @@ select
     p.category,
     p.brand,
     p.age_group,
+    p.age_min,
+    p.age_max,
     i.unit_price,
     i.shelf_location,
     i.quantity_available
