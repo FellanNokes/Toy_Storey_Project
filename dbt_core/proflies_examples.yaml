@@ -1,0 +1,13 @@
+dbt_toy_storey:
+  outputs:
+    dev:
+      account: # Account identifier in snowflake
+      database: toy_storey
+      password: # transformar password
+      role: toy_dbt_role
+      schema: toy_storey.warehouse
+      threads: 1
+      type: snowflake
+      user: transformer
+      warehouse: toy_wh
+  target: dev

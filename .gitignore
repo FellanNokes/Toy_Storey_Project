@@ -231,3 +231,6 @@ data/
 
 # Snowflake
 *setup_users.sql
+
+# dlt/dbt
+ingestion/secrets.toml
