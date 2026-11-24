@@ -7,7 +7,8 @@ requires-python = ">=3.13"
 dependencies = [
     "dbt-core>=1.12.6",
     "dbt-duckdb>=1.11.1",
-    "dlt[duckdb]>=1.31.0",
+    "dbt-snowflake>=1.12.5",
+    "dlt[duckdb,snowflake]>=1.31.0",
     "duckdb>=2.0.0",
     "faker>=40.43.0",
     "fastapi>=0.162.0",
