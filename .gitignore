@@ -228,3 +228,6 @@ __marimo__/
 
 # Data folder
 data/
+
+# Snowflake
+*setup_users.sql
