@@ -25,3 +25,14 @@ class Sale(BaseModel):
     transaction_type: str
     transaction_timestamp: datetime
     customer_id: str | None = None
+
+class Storeworker(BaseModel):
+    product_name: str
+    category: str
+    brand: str
+    age_group: str
+    age_min: int
+    age_max: int
+    unit_price: int
+    shelf_location: str
+    quantity_available: int

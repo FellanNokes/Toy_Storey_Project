@@ -33,3 +33,9 @@ def get_sales() -> pd.DataFrame:
         .dt.tz_convert("Europe/Stockholm")
     )
     return df
+
+def get_storeworker() -> pd.DataFrame:
+    """Fetch inventory data for storeworker from the API."""
+    response = httpx.get(f"{API_URL}/storeworker/", timeout=10)
+    response.raise_for_status()
+    return pd.DataFrame(response.json())
